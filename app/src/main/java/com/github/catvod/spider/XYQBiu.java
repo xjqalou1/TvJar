@@ -219,7 +219,7 @@ public class XYQBiu extends Spider {
              }else{
              html = convertUnicodeToCh(fetch(webUrl));             
             }
-            String html = jumpbtwaf(webUrl,html);//5秒盾
+//            String html = jumpbtwaf(webUrl,html);//5秒盾
             String parseContent = html;
             String mark = "";
             String pic = "";
