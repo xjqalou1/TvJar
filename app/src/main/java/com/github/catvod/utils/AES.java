@@ -29,6 +29,41 @@ public class AES {
         }
         return null;
     }
+    
+    public static String aesDecryptString(String content, String key) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException, UnsupportedEncodingException {
+		Decoder decoder = Base64.getDecoder();
+	    byte[] encryptedBytes = decoder.decode(content);
+	    byte[] keyBytes = key.getBytes(charset);
+		byte[] decryptedBytes = aesDecryptBytes(encryptedBytes, keyBytes);
+	    return new String(decryptedBytes, charset);		
+	}
+	
+    
+    public static String CBCEncrypt(String src, String KEY, String IV) {
+        try {
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS7Padding");
+            SecretKeySpec keySpec = new SecretKeySpec(KEY.getBytes(), "AES");
+            AlgorithmParameterSpec paramSpec = new IvParameterSpec(IV.getBytes());
+            cipher.init(Cipher.ENCRYPT_MODE, keySpec, paramSpec);
+            return  Base64.encodeToString(cipher.doFinal(src.getBytes()),0);
+        } catch (Exception exception) {
+            SpiderDebug.log(exception);
+        }
+        return null;
+     }
+     
+     public static String AESDcodetoString(String src, String KEY, String IV) {
+        try {
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS7Padding");
+            SecretKeySpec keySpec = new SecretKeySpec(KEY.getBytes(), "AES");
+            AlgorithmParameterSpec paramSpec = new IvParameterSpec(IV.getBytes());
+            cipher.init(Cipher.DECRYPT_MODE, keySpec, paramSpec);
+            return new String(cipher.doFinal(src.getBytes("UTF-8")));
+        } catch (Exception exception) {
+            SpiderDebug.log(exception);
+        }
+        return null;
+    }
 
 
     public static Cipher GetCipher(int opmode, String key) {
