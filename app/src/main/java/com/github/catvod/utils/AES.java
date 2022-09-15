@@ -29,16 +29,6 @@ public class AES {
         }
         return null;
     }
-    
-    public static String aesDecryptString(String content, String key) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException, UnsupportedEncodingException {
-		Decoder decoder = Base64.getDecoder();
-	    byte[] encryptedBytes = decoder.decode(content);
-	    byte[] keyBytes = key.getBytes(charset);
-		byte[] decryptedBytes = aesDecryptBytes(encryptedBytes, keyBytes);
-	    return new String(decryptedBytes, charset);		
-	}
-	
-    
     public static String CBCEncrypt(String src, String KEY, String IV) {
         try {
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS7Padding");
