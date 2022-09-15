@@ -217,7 +217,8 @@ public class XYQBiu extends Spider {
             }
              html = convertUnicodeToCh(callBack.getResult().replaceAll("\r|\n", ""));
              }else{
-             html = convertUnicodeToCh(fetch(webUrl));
+//             html = convertUnicodeToCh(fetch(webUrl));
+             html = jumpbtwaf(webUrl,html);//5秒盾
             }
             
             String parseContent = html;
@@ -375,7 +376,8 @@ public class XYQBiu extends Spider {
             } else {
             //非直接播放
             String html = fetch(webUrl).trim();
-            html = convertUnicodeToCh(html);
+//            html = convertUnicodeToCh(html);
+            html = jumpbtwaf(webUrl,html);//5秒盾
             String parseContent = html;
             boolean bfshifouercijiequ = getRuleVal("list_YN_twice").equals("1");
             if (bfshifouercijiequ) {
