@@ -187,7 +187,7 @@ public class XYQBiu extends Spider {
             //筛选结束
             String html = null;
             //取网页
-            String html = jumpbtwaf(webUrl,html);//5秒盾
+            
             if(webUrl.contains(";post")){
             OKCallBack.OKCallBackString callBack = new OKCallBack.OKCallBackString() {
 
@@ -218,9 +218,9 @@ public class XYQBiu extends Spider {
             }
              html = convertUnicodeToCh(callBack.getResult().replaceAll("\r|\n", ""));
              }else{
-             html = convertUnicodeToCh(fetch(webUrl));                                    
-            }
-             
+             html = convertUnicodeToCh(fetch(webUrl));                           }else if jumpbtwaf(webUrl,html){
+             html = jumpbtwaf(webUrl,html);//5秒盾
+             }
             String parseContent = html;
             String mark = "";
             String pic = "";
