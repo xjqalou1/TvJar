@@ -148,7 +148,8 @@ public class XYQBiu extends Spider {
         }
         return "";
     }
-
+    
+    private static String btwatUrl;
     private JSONObject category(String tid, String pg, boolean filter, HashMap<String, String> extend) {
         try {
             fetchRule();
@@ -197,8 +198,7 @@ public class XYQBiu extends Spider {
                @Override
                protected void onFailure(Call call, Exception exc) {
                }
-            };
-            private static String btwatUrl;
+            };            
             String posturl = webUrl.split("\\?")[0].replaceAll("？？", "?").trim();
             String postbody = webUrl.split("\\?")[1].split(";")[0].replaceAll("？？", "?").trim();
             if(!postbody.isEmpty() && postbody != null){
