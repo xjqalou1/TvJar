@@ -117,7 +117,7 @@ public class XYQBiu extends Spider {
         
         if (!btcookie.isEmpty() && (str2.equals("cookie") || str2.equals("Cookie"))) {
                     StringBuilder stringBuilder = new StringBuilder();
-                    stringBuilder.append(ua);
+                    stringBuilder.append(obj);
                     stringBuilder.append(";");
                     stringBuilder.append(btcookie);
                     obj = stringBuilder.toString();
