@@ -33,7 +33,6 @@ import java.util.regex.Pattern;
 import okhttp3.Call;
 import okhttp3.Headers;
 import okhttp3.Response;
-import okhttp3.btwatUrl;
 
 public class XYQBiu extends Spider {
 
@@ -161,6 +160,7 @@ public class XYQBiu extends Spider {
                 pg = String.valueOf(Integer.parseInt(pg) - 1 + Integer.parseInt(getRuleVal("firstpage","1")));
             }
             //web链接
+            private static String btwatUrl
             String webUrl = getRuleVal("class_url");
             if (webUrl.contains("firstPage=")) {
                 if (pg.equals("1")) {
