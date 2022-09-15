@@ -217,10 +217,11 @@ public class XYQBiu extends Spider {
             OkHttpUtil.post(OkHttpUtil.defaultClient(), posturl, null, getHeaders(posturl), callBack);
             }
              html = convertUnicodeToCh(callBack.getResult().replaceAll("\r|\n", ""));
+             btwatUrl = posturl;
              }else{
-             html = convertUnicodeToCh(fetch(webUrl));                           }else if jumpbtwaf(webUrl,html){
-             html = jumpbtwaf(webUrl,html);//5秒盾
-             }
+             html = convertUnicodeToCh(fetch(webUrl));
+             btwatUrl = webUrl;                           }
+            html = jumpbtwaf(webUrl,html);//5秒盾 
             String parseContent = html;
             String mark = "";
             String pic = "";
