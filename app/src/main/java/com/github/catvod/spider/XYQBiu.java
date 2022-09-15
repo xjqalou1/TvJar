@@ -159,8 +159,7 @@ public class XYQBiu extends Spider {
             } else {
                 pg = String.valueOf(Integer.parseInt(pg) - 1 + Integer.parseInt(getRuleVal("firstpage","1")));
             }
-            //web链接
-            private static String btwatUrl
+            //web链接            
             String webUrl = getRuleVal("class_url");
             if (webUrl.contains("firstPage=")) {
                 if (pg.equals("1")) {
@@ -194,6 +193,8 @@ public class XYQBiu extends Spider {
 
                public void onResponse(String response) {
                }
+              
+                private static String btwatUrl;
 
                @Override
                protected void onFailure(Call call, Exception exc) {
