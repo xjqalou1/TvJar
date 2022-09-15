@@ -33,7 +33,7 @@ import java.util.regex.Pattern;
 import okhttp3.Call;
 import okhttp3.Headers;
 import okhttp3.Response;
-import okhttp3.btwatUrl
+import okhttp3.btwatUrl;
 
 public class XYQBiu extends Spider {
 
