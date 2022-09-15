@@ -192,14 +192,13 @@ public class XYQBiu extends Spider {
             OKCallBack.OKCallBackString callBack = new OKCallBack.OKCallBackString() {
 
                public void onResponse(String response) {
-               }
-              
-                private static String btwatUrl;
+               }                              
 
                @Override
                protected void onFailure(Call call, Exception exc) {
                }
             };
+            private static String btwatUrl;
             String posturl = webUrl.split("\\?")[0].replaceAll("？？", "?").trim();
             String postbody = webUrl.split("\\?")[1].split(";")[0].replaceAll("？？", "?").trim();
             if(!postbody.isEmpty() && postbody != null){
