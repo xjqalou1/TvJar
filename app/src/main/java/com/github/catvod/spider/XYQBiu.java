@@ -125,7 +125,7 @@ public class XYQBiu extends Spider {
                 headers.put(str2, obj);
             }
             if (!(btcookie.isEmpty() || btcookie.length() <= 1 || trim.contains("Cookie$") || trim.contains("cookie$"))) {
-                hashMap.put("Cookie", btcookie);
+                headers.put("Cookie", btcookie);
             }
         } else if (trim.isEmpty()) {
             return Headers(url);
@@ -188,7 +188,7 @@ public class XYQBiu extends Spider {
             }
             headers.put("User-Agent", obj22);
         }
-        return header;
+        return headers;
     }
 
     @Override
