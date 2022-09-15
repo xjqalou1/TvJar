@@ -101,24 +101,94 @@ public class XYQBiu extends Spider {
     }
 
     protected HashMap<String, String> getHeaders(String url) {
-        HashMap<String, String> headers = new HashMap<>();
-        String ua = getRuleVal("UserAgent", "okhttp/3.12.11").trim();
-        if (ua.isEmpty()) {
-            ua = "okhttp/3.12.11";
-        } else if (ua.equals("PC_UA")) {
-            ua = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36";
-        } else if (ua.equals("MOBILE_UA")) {
-            ua = "Mozilla/5.0 (Linux; Android 11; Mi 10 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.152 Mobile Safari/537.36";
-        }
-        headers.put("User-Agent", ua);
-
-        if (!getRuleVal("Referer").isEmpty()) {
-            String webref = getRuleVal("Referer").trim();
-            if (webref.startsWith("http")) {
-                headers.put("Referer", webref);
+        HashMap<String, String> headers = new HashMap<>();        
+        String trim = getRuleVal("SUserAgent", "").trim();
+        if (trim.contains("$")) {
+            String[] split = trim.split("#");
+            for (String split2 : split) {
+                String[] split3 = split2.split("\\$");
+                String str2 = split3[0];
+                Object obj = split3[1];
+                if (obj.equals("PC_UA")) {
+                    obj = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36";
+                } else if (trim.equals("MOBILE_UA")) {
+                    obj = "Mozilla/5.0 (Linux; Android 11; Mi 10 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.152 Mobile Safari/537.36";
+                }
+        
+        if (!btcookie.isEmpty() && (str2.equals("cookie") || str2.equals("Cookie"))) {
+                    StringBuilder stringBuilder = new StringBuilder();
+                    stringBuilder.append(ua);
+                    stringBuilder.append(";");
+                    stringBuilder.append(btcookie);
+                    obj = stringBuilder.toString();
+                }
+                headers.put(str2, obj);
             }
+            if (!(btcookie.isEmpty() || btcookie.length() <= 1 || trim.contains("Cookie$") || trim.contains("cookie$"))) {
+                hashMap.put("Cookie", btcookie);
+            }
+        } else if (trim.isEmpty()) {
+            return Headers(url);
+        } else {
+            Object obj2;
+            if (trim.equals("PC_UA")) {
+                obj2 = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36";
+            } else if (trim.equals("MOBILE_UA")) {
+                obj2 = "Mozilla/5.0 (Linux; Android 11; Mi 10 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.152 Mobile Safari/537.36";
+            } else {
+                String obj22 = trim;
+            }
+            if (!btcookie.isEmpty() && btcookie.length() > 1) {
+                headers.put("Cookie", btcookie);
+            }
+            headers.put("User-Agent", obj22);
         }
         return headers;
+    }
+        
+    protected HashMap<String, String> Headers(String url) {
+        HashMap<String, String> headers = new HashMap<>();    
+        String trim = getRuleVal("UserAgent", "").trim();
+        if (trim.contains("$")) {
+            String[] split = trim.split("#");
+            for (String split2 : split) {
+                String[] split3 = split2.split("\\$");
+                String str2 = split3[0];
+                Object obj = split3[1];
+                if (obj.equals("PC_UA")) {
+                    obj = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36";
+                } else if (trim.equals("MOBILE_UA")) {
+                    obj = "Mozilla/5.0 (Linux; Android 11; Mi 10 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.152 Mobile Safari/537.36";
+                }
+                if (!btcookie.isEmpty() && (str2.equals("cookie") || str2.equals("Cookie"))) {
+                    StringBuilder stringBuilder = new StringBuilder();
+                    stringBuilder.append(obj);
+                    stringBuilder.append(";");
+                    stringBuilder.append(btcookie);
+                    obj = stringBuilder.toString();
+                }
+                headers.put(str2, obj);
+            }
+            if (!(btcookie.isEmpty() || btcookie.length() <= 1 || trim.contains("Cookie$") || trim.contains("cookie$"))) {
+                headers.put("Cookie", btcookie);
+            }
+        } else {
+            Object obj2;
+            if (trim.isEmpty()) {
+                obj2 = "okhttp/3.12.11";
+            } else if (trim.equals("PC_UA")) {
+                obj2 = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36";
+            } else if (trim.equals("MOBILE_UA")) {
+                obj2 = "Mozilla/5.0 (Linux; Android 11; Mi 10 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.152 Mobile Safari/537.36";
+            } else {
+                String obj22 = trim;
+            }
+            if (!btcookie.isEmpty() && btcookie.length() > 1) {
+                headers.put("Cookie", btcookie);
+            }
+            headers.put("User-Agent", obj22);
+        }
+        return header;
     }
 
     @Override
@@ -205,7 +275,7 @@ public class XYQBiu extends Spider {
                 if (!postbody.isEmpty() && postbody != null) {
                     if (postbody.startsWith("{") && postbody.endsWith("}")) {
                         JSONObject jsbody = new JSONObject(postbody);
-                        OkHttpUtil.postJson(OkHttpUtil.defaultClient(), posturl, jsbody.toString(), getHeaders(posturl), callBack);
+                        OkHttpUtil.postJson(OkHttpUtil.defaultClient(), posturl, jsbody.toString(), Headers(posturl), callBack);
                     } else {
                         LinkedHashMap<String, String> params = new LinkedHashMap<String, String>();
                         String[] userbody = postbody.split("&");
@@ -213,10 +283,10 @@ public class XYQBiu extends Spider {
                             int loca = userbd.indexOf("=");
                             params.put(userbd.substring(0, loca), userbd.substring(loca + 1));
                         }
-                        OkHttpUtil.post(OkHttpUtil.defaultClient(), posturl, params, getHeaders(posturl), callBack);
+                        OkHttpUtil.post(OkHttpUtil.defaultClient(), posturl, params, Headers(posturl), callBack);
                     }
                 } else {
-                    OkHttpUtil.post(OkHttpUtil.defaultClient(), posturl, null, getHeaders(posturl), callBack);
+                    OkHttpUtil.post(OkHttpUtil.defaultClient(), posturl, null, Headers(posturl), callBack);
                 }
                 html = convertUnicodeToCh(callBack.getResult().replaceAll("\r|\n", ""));
                 btwatUrl = posturl;
@@ -706,7 +776,7 @@ public class XYQBiu extends Spider {
                 if (!postbody.isEmpty() && postbody != null) {
                     if (postbody.startsWith("{") && postbody.endsWith("}")) {
                         JSONObject jsbody = new JSONObject(postbody);
-                        OkHttpUtil.postJson(OkHttpUtil.defaultClient(), webUrl, jsbody.toString(), getHeaders(webUrl), callBack);
+                        OkHttpUtil.postJson(OkHttpUtil.defaultClient(), webUrl, jsbody.toString(), Headers(webUrl), callBack);
                     } else {
                         LinkedHashMap<String, String> params = new LinkedHashMap<String, String>();
                         //params.put(postbody, key);
@@ -717,10 +787,10 @@ public class XYQBiu extends Spider {
                             //String[] bdhead = userbd.split("=");
                             params.put(userbd.substring(0, loca), userbd.substring(loca + 1));
                         }
-                        OkHttpUtil.post(OkHttpUtil.defaultClient(), webUrl, params, getHeaders(webUrl), callBack);
+                        OkHttpUtil.post(OkHttpUtil.defaultClient(), webUrl, params, Headers(webUrl), callBack);
                     }
                 } else {
-                    OkHttpUtil.post(OkHttpUtil.defaultClient(), webUrl, null, getHeaders(webUrl), callBack);
+                    OkHttpUtil.post(OkHttpUtil.defaultClient(), webUrl, null, Headers(webUrl), callBack);
                 }
                 webContent = convertUnicodeToCh(callBack.getResult().replaceAll("\r|\n", ""));
             } else {
@@ -990,6 +1060,6 @@ public class XYQBiu extends Spider {
                 return html;
             }
         }
-        return html;
+        return null;
     }
 }
