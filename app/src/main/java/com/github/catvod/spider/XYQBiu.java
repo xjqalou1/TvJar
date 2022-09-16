@@ -382,7 +382,7 @@ public class XYQBiu extends Spider {
                 //非直接播放
                 String html = fetch(webUrl).trim();
                 html = jumpbtwaf(webUrl,html);//5秒盾
-                html = convertUnicodeToCh(html);
+//                html = convertUnicodeToCh(html);
                 String parseContent = html;
                 boolean bfshifouercijiequ = getRuleVal("list_YN_twice").equals("1");
                 if (bfshifouercijiequ) {
