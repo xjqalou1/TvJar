@@ -58,7 +58,7 @@ public class Proxy extends Spider {
             } else if (what.equals("czspp")) {
                 return Czsapp.loadsub(params.get("url"));
             } else if (what.equals("XYQBiu")) {
-                return XYQBiu.loadpic(prmap));
+                return XYQBiu.loadPic(params);
             }
 
         } catch (Throwable th) {
